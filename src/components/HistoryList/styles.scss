@@ -1,0 +1,23 @@
+.evolutions {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.evolutions__evolution-button {
+    background: #fff;
+    height: 30px;
+    width: 120px;
+    font-size: 10px;
+    border-radius: 10px;
+
+    &:disabled {
+        color: #000;
+    }
+}
+
+.evolutions__evolution-number {
+    font-size: 10px;
+    text-align: center;
+    margin-bottom: 5px;
+}

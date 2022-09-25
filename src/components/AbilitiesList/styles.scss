@@ -1,0 +1,23 @@
+.abilities {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    background: #fff;
+    border-radius: 10px;
+    border: 2px solid;
+    padding: 5px;
+    box-sizing: border-box;
+    max-height: 200px;
+}
+
+.abilities__ability {
+    font-size: 12px;
+    background: #7ba8f9;
+    border: 1px solid;
+    border-radius: 10px;
+    height: 30px;
+    padding: 5px;
+    margin: 10px 0;
+    display: flex;
+    align-items: center;
+}

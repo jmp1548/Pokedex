@@ -77,7 +77,7 @@ export const PokedexSlice = createSlice({
     initialState,
     reducers: {
         pushHistory: (state, action: PayloadAction<string>) => {
-            state.history.push(action.payload);
+            state.history.unshift(action.payload);
         },
     },
     extraReducers: (builder) => {

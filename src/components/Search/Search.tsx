@@ -18,7 +18,7 @@ export const Search: React.FC<SearchProps> = ({ handleSearch }) => {
             />
             <button
                 className="search__button"
-                onClick={() => handleSearch(pokemonName)}
+                onClick={() => handleSearch(pokemonName.toLowerCase())}
             >
                 Go
             </button>

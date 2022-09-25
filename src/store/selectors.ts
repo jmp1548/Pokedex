@@ -8,7 +8,7 @@ export const selectHistory = (state: RootState) => state.pokedex.history;
 
 export const selectPokemonEvolution = createSelector(
     selectPokemon,
-    (pokemon) => pokemon.evolution
+    (pokemon) => pokemon?.evolution
 );
 
 export const selectPokemonEvolutionChain = createSelector(
@@ -16,10 +16,10 @@ export const selectPokemonEvolutionChain = createSelector(
     (evolution) => {
         let evolutionChain = [];
 
-        let currentEvolution = evolution.chain;
+        let currentEvolution = evolution?.chain;
         while (currentEvolution !== null) {
-            evolutionChain.push(currentEvolution.species.name);
-            currentEvolution = currentEvolution.evolves_to[0] || null;
+            evolutionChain.push(currentEvolution?.species.name);
+            currentEvolution = currentEvolution?.evolves_to[0] || null;
         }
 
         return evolutionChain;
@@ -34,4 +34,14 @@ export const selectPokemonSpecies = createSelector(
 export const selectPokemonFlavorText = createSelector(
     selectPokemonSpecies,
     (species) => species?.flavor_text_entries[0].flavor_text
+);
+
+export const selectPokemonAbilities = createSelector(
+    selectPokemon,
+    (pokemon) => pokemon?.pokemon.abilities
+);
+
+export const selectPokemonTypes = createSelector(
+    selectPokemon,
+    (pokemon) => pokemon?.pokemon.types
 );
