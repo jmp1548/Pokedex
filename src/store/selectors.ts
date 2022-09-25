@@ -1,19 +1,26 @@
 import { createSelector } from "@reduxjs/toolkit";
 import { RootState } from "../app/store";
+import {
+    Pokemon,
+    Evolution,
+    SpeciesInfo,
+    Abilities,
+    Types,
+    Stats,
+} from "./reducers";
 
-//TODO - Add Types
-export const selectPokemon = (state: RootState, pokemonName: string) =>
+export const selectPokemon = (state: RootState, pokemonName: string): Pokemon =>
     state.pokedex.entries[pokemonName];
 export const selectHistory = (state: RootState) => state.pokedex.history;
 
 export const selectPokemonEvolution = createSelector(
     selectPokemon,
-    (pokemon) => pokemon?.evolution
+    (pokemon): Evolution => pokemon?.evolution
 );
 
 export const selectPokemonEvolutionChain = createSelector(
     selectPokemonEvolution,
-    (evolution) => {
+    (evolution): string[] => {
         let evolutionChain = [];
 
         let currentEvolution = evolution?.chain;
@@ -28,20 +35,25 @@ export const selectPokemonEvolutionChain = createSelector(
 
 export const selectPokemonSpecies = createSelector(
     selectPokemon,
-    (pokemon) => pokemon?.species
+    (pokemon): SpeciesInfo => pokemon?.species
 );
 
 export const selectPokemonFlavorText = createSelector(
     selectPokemonSpecies,
-    (species) => species?.flavor_text_entries[0].flavor_text
+    (species): string => species?.flavor_text_entries[0].flavor_text
 );
 
 export const selectPokemonAbilities = createSelector(
     selectPokemon,
-    (pokemon) => pokemon?.pokemon.abilities
+    (pokemon): Abilities[] => pokemon?.pokemon.abilities
+);
+
+export const selectPokemonStats = createSelector(
+    selectPokemon,
+    (pokemon): Stats[] => pokemon?.pokemon.stats
 );
 
 export const selectPokemonTypes = createSelector(
     selectPokemon,
-    (pokemon) => pokemon?.pokemon.types
+    (pokemon): Types[] => pokemon?.pokemon.types
 );

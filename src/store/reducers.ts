@@ -93,8 +93,7 @@ export const PokedexSlice = createSlice({
             })
             .addCase(fetchPokemon.rejected, (state) => {
                 state.isLoading = false;
-            })
-            .addDefaultCase((state, action) => {});
+            });
     },
 });
 

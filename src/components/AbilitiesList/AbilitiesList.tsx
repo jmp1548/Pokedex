@@ -9,9 +9,9 @@ interface AbilitiesListProps {
 
 export const AbilitiesList: React.FC<AbilitiesListProps> = ({ abilities }) => {
     return (
-        <div className="abilities">
-            {abilities &&
-                abilities.map((abilitie: Abilities) => {
+        abilities && (
+            <div className="abilities">
+                {abilities.map((abilitie: Abilities) => {
                     return (
                         <div
                             className="abilities__ability"
@@ -21,6 +21,7 @@ export const AbilitiesList: React.FC<AbilitiesListProps> = ({ abilities }) => {
                         </div>
                     );
                 })}
-        </div>
+            </div>
+        )
     );
 };

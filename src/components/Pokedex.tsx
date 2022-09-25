@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useAppSelector, useAppDispatch } from "../app/hooks";
+import { RootState } from "../app/store";
 import { fetchPokemon } from "../store/actions";
 import {
     selectPokemon,
@@ -8,9 +9,10 @@ import {
     selectPokemonTypes,
     selectPokemonEvolutionChain,
     selectHistory,
+    selectPokemonStats,
 } from "../store/selectors";
 import { pushHistory } from "../store/reducers";
-import "./styles/pokedex.scss";
+import "./pokedex.scss";
 
 import { Screen } from "./Screen";
 import { Search } from "./Search";
@@ -25,19 +27,22 @@ const Pokedex: React.FC = () => {
     const dispatch = useAppDispatch();
     const [selectedPokemon, setSelectedPokemon] = useState<string>("");
 
-    const currentPokemon = useAppSelector((state) =>
+    const currentPokemon = useAppSelector((state: RootState) =>
         selectPokemon(state, selectedPokemon)
     );
-    const flavorText = useAppSelector((state) =>
+    const flavorText = useAppSelector((state: RootState) =>
         selectPokemonFlavorText(state, selectedPokemon)
     );
-    const abilities = useAppSelector((state) =>
+    const stats = useAppSelector((state: RootState) =>
+        selectPokemonStats(state, selectedPokemon)
+    );
+    const abilities = useAppSelector((state: RootState) =>
         selectPokemonAbilities(state, selectedPokemon)
     );
-    const types = useAppSelector((state) =>
+    const types = useAppSelector((state: RootState) =>
         selectPokemonTypes(state, selectedPokemon)
     );
-    const evolutions = useAppSelector((state) =>
+    const evolutions = useAppSelector((state: RootState) =>
         selectPokemonEvolutionChain(state, selectedPokemon)
     );
     const history = useAppSelector(selectHistory);
@@ -45,7 +50,7 @@ const Pokedex: React.FC = () => {
     useEffect(() => {
         if (currentPokemon === undefined && selectedPokemon !== "") {
             dispatch(fetchPokemon(selectedPokemon));
-        } else {
+        } else if (selectedPokemon !== "") {
             dispatch(pushHistory(selectedPokemon));
         }
     }, [selectedPokemon]);
@@ -67,8 +72,11 @@ const Pokedex: React.FC = () => {
                 </div>
                 <TypeList types={types} />
                 <Screen image={currentPokemon?.pokemon.sprites.front_default} />
-                <StatsList stats={currentPokemon?.pokemon.stats} />
-                <Search handleSearch={handleSearch} />
+                <StatsList stats={stats} />
+                <Search
+                    handleSearch={handleSearch}
+                    currentPokemon={selectedPokemon}
+                />
             </div>
             <div className="pokedex__binding">
                 <div className="pokedex__binding-top">
@@ -122,13 +130,13 @@ const Pokedex: React.FC = () => {
             </div>
             <div className="pokedex__right">
                 <Description flavorText={flavorText} />
-                <HistoryList history={history} />
                 <Evolutions
                     evolutions={evolutions}
                     currentPokemon={selectedPokemon}
                     handleSearch={handleSearch}
                 />
                 <AbilitiesList abilities={abilities} />
+                <HistoryList history={history} handleSearch={handleSearch} />
             </div>
         </div>
     );

@@ -4,20 +4,25 @@ import "./styles.scss";
 
 interface HistoryListProps {
     history: string[];
+    handleSearch: (pokemon: string) => void;
 }
 
-export const HistoryList: React.FC<HistoryListProps> = ({ history }) => {
+export const HistoryList: React.FC<HistoryListProps> = ({
+    history,
+    handleSearch,
+}) => {
     return (
         <div className="history">
             {history &&
                 history.map((pokemon, index) => {
                     return (
-                        <div
-                            className="evolutions__evolution"
+                        <button
+                            className="history__button"
                             key={`${pokemon}-${index}`}
+                            onClick={() => handleSearch(pokemon)}
                         >
                             {pokemon}
-                        </div>
+                        </button>
                     );
                 })}
         </div>
