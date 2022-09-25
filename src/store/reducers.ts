@@ -1,5 +1,5 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { fetchPokemon } from './actions';
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { fetchPokemon } from "./actions";
 
 export interface Pokedex {
     entries: { [name: string]: Pokemon };
@@ -7,76 +7,97 @@ export interface Pokedex {
     isLoading: boolean;
 }
 
-interface Pokemon {
-    pokemon: PokemonInfo,
-    species: SpeciesInfo,
-    evolution: Evolution,
+export interface Pokemon {
+    pokemon: PokemonInfo;
+    species: SpeciesInfo;
+    evolution: Evolution;
 }
 
-interface PokemonInfo {
-    name: string,
-    sprites: { front_default: string }
+export interface PokemonInfo {
+    name: string;
+    sprites: { front_default: string };
+    abilities: Abilities[];
+    types: Types[];
+    stats: Stats[];
 }
 
-interface SpeciesInfo {
-    flavor_text_entries: []
+export interface Abilities {
+    ability: { name: string };
 }
 
-interface Evolution {
-    chain: EvolutionInfo
+export interface Types {
+    type: { name: string };
 }
 
-interface EvolutionInfo {
-    evolves_to: EvolutionEvolvesTo[],
-    species: EvolutionSpecies
+export enum Stat {
+    hp = "HP",
+    attack = "ATTACK",
+    defense = "DEFENSE",
+    "special-attack" = "S. ATTACK",
+    "special-defense" = "S. DEFENSE",
+    speed = "SPEED",
 }
 
-interface EvolutionEvolvesTo {
-    evolves_to: EvolutionEvolvesTo[],
-    species: EvolutionSpecies
+export interface Stats {
+    base_stat: number;
+    stat: { name: keyof typeof Stat };
 }
 
-interface EvolutionSpecies {
-    name: string,
-    url: string,
+export interface SpeciesInfo {
+    flavor_text_entries: { flavor_text: string }[];
 }
 
-const initialState: Pokedex = {
+export interface Evolution {
+    chain: EvolutionInfo;
+}
+
+export interface EvolutionInfo {
+    evolves_to: EvolutionEvolvesTo[];
+    species: EvolutionSpecies;
+}
+
+export interface EvolutionEvolvesTo {
+    evolves_to: EvolutionEvolvesTo[];
+    species: EvolutionSpecies;
+}
+
+export interface EvolutionSpecies {
+    name: string;
+    url: string;
+}
+
+export const initialState: Pokedex = {
     entries: {},
     history: [],
     isLoading: false,
 };
 
 export const PokedexSlice = createSlice({
-    name: 'pokedex',
+    name: "pokedex",
     initialState,
     reducers: {
-        pushHistory: (state,  action: PayloadAction<string>) => {
+        pushHistory: (state, action: PayloadAction<string>) => {
             state.history.push(action.payload);
-        }
+        },
     },
     extraReducers: (builder) => {
         builder
-        .addCase(fetchPokemon.pending, (state) => {
-            state.isLoading = true;
-        })
-        .addCase(fetchPokemon.fulfilled, (state, action) => {
-            state.isLoading = false
-            if (action?.payload?.pokemon !== undefined) {
-                state.entries[action.payload.pokemon.name] = action.payload; 
-            }
-        })
-        .addCase(fetchPokemon.rejected, (state) => {
-            state.isLoading = false
-        })
-        .addDefaultCase((state, action) => {})
+            .addCase(fetchPokemon.pending, (state) => {
+                state.isLoading = true;
+            })
+            .addCase(fetchPokemon.fulfilled, (state, action) => {
+                state.isLoading = false;
+                if (action?.payload?.pokemon !== undefined) {
+                    state.entries[action.payload.pokemon.name] = action.payload;
+                }
+            })
+            .addCase(fetchPokemon.rejected, (state) => {
+                state.isLoading = false;
+            })
+            .addDefaultCase((state, action) => {});
     },
-    
-  });
+});
 
 export const { pushHistory } = PokedexSlice.actions;
 
-
 export default PokedexSlice.reducer;
-
-  

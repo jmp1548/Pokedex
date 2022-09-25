@@ -1,0 +1,17 @@
+.description {
+    resize: none;
+    height: 100px;
+    width: 100%;
+    padding: 10px;
+    box-sizing: border-box;
+    background: #98cb98;
+    border: 2px solid #000;
+    border-radius: 10px;
+    overflow: auto;
+
+    p {
+        margin: 0;
+        font-size: 12px;
+        line-height: 15px;
+    }
+}

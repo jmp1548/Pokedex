@@ -1,0 +1,24 @@
+.search {
+    display: flex;
+    align-items: center;
+
+    input {
+        background: #98cb98;
+        border-radius: 10px;
+        height: 40px;
+        font-size: 12px;
+        border: 2px inset #000;
+        padding: 0 10px;
+        box-sizing: border-box;
+    }
+}
+
+.search__button {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: #585858;
+    color: #fff;
+    border: 1px solid #000;
+    margin-left: 20px;
+}

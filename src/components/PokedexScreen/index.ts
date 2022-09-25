@@ -1,3 +1,0 @@
-export { PokedexScreen } from "./PokedexScreen";
-
- 
